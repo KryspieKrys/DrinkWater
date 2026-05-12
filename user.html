@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HydroTrack</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1a73e8" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== LAYAR ERROR (jika ID tidak valid) ===================== -->
+  <div id="error-screen" style="display:none;">
+    <h1>⚠️ Link Tidak Valid</h1>
+    <p>Link yang Anda gunakan tidak ditemukan atau sudah dihapus. Hubungi Owner untuk mendapatkan link baru.</p>
+  </div>
+
+  <!-- ===================== LOADING ===================== -->
+  <div id="loading-screen">
+    <p>⏳ Memuat data...</p>
+  </div>
+
+  <!-- ===================== HALAMAN UTAMA USER ===================== -->
+  <div id="user-page" style="display:none;">
+
+    <!-- Header -->
+    <header>
+      <h1>💧 HydroTrack</h1>
+      <p id="user-greeting">Halo, <strong id="user-name-display"></strong>!</p>
+      <p id="today-date"></p>
+    </header>
+
+    <!-- Progress Pribadi -->
+    <section id="my-progress-section">
+      <h2>Progress Hari Ini</h2>
+
+      <div class="big-progress-container">
+        <div id="my-progress-fill" class="big-progress-fill" style="width: 0%;"></div>
+      </div>
+      <p id="my-progress-text">0 / 0 ml (0%)</p>
+
+      <!-- Form input minum -->
+      <div id="drink-form">
+        <label for="drink-amount">Tambah minum (ml):</label>
+        <div id="drink-input-row">
+          <input type="number" id="drink-amount" placeholder="cth: 300" min="1" max="5000" step="50" />
+          <button id="drink-btn" onclick="addDrink()">+ Tambah</button>
+        </div>
+        <!-- Shortcut buttons -->
+        <div id="quick-buttons">
+          <button class="quick-btn" onclick="quickAdd(150)">150ml</button>
+          <button class="quick-btn" onclick="quickAdd(200)">200ml</button>
+          <button class="quick-btn" onclick="quickAdd(250)">250ml</button>
+          <button class="quick-btn" onclick="quickAdd(300)">300ml</button>
+          <button class="quick-btn" onclick="quickAdd(500)">500ml</button>
+        </div>
+      </div>
+
+      <!-- Status tujuan -->
+      <p id="goal-status"></p>
+    </section>
+
+    <!-- Riwayat Log Hari Ini -->
+    <section id="log-section">
+      <h2>Riwayat Hari Ini</h2>
+      <ul id="log-list">
+        <!-- Diisi oleh JS -->
+      </ul>
+      <p id="no-log-msg">Belum ada catatan hari ini. Mulai minum! 💪</p>
+    </section>
+
+    <!-- Target Setting (user bisa ubah target sendiri) -->
+    <section id="target-section">
+      <h2>Ubah Target Harian</h2>
+      <div id="target-form">
+        <input type="number" id="target-input" placeholder="cth: 2000" min="100" step="50" />
+        <span>ml</span>
+        <button id="save-target-btn" onclick="saveTarget()">Simpan</button>
+      </div>
+      <p id="target-status"></p>
+    </section>
+
+    <!-- Progress User Lain (jika punya akses) -->
+    <section id="others-section" style="display:none;">
+      <h2>Progress Teman</h2>
+      <div id="others-list">
+        <!-- Diisi oleh JS -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Firebase SDK v9 (CDN) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <!-- Config -->
+  <script src="firebase-config.js"></script>
+
+  <!-- Logic User -->
+  <script src="user.js"></script>
+
+  <!-- Daftarkan Service Worker untuk PWA -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").catch(console.error);
+    }
+  </script>
+</body>
+</html>
