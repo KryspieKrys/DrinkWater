@@ -18,8 +18,19 @@ let allUsersListener = null;
 window.onload = async function () {
   // 1. Ambil ID dari URL: user.html?id=USERID
   const params = new URLSearchParams(window.location.search);
-  currentUserId = params.get("id");
+  let idFromUrl = params.get("id");
 
+  // Jika ada ID di URL, simpan ke memori HP (localStorage) agar diingat
+  if (idFromUrl) {
+    localStorage.setItem("hydrotrack_user_id", idFromUrl);
+    currentUserId = idFromUrl;
+  } else {
+    // Jika tidak ada di URL (misal: dibuka dari ikon PWA di Home Screen),
+    // coba ambil dari memori HP
+    currentUserId = localStorage.getItem("hydrotrack_user_id");
+  }
+
+  // Jika masih tidak ada ID sama sekali, berarti link tidak valid
   if (!currentUserId) {
     showError();
     return;
