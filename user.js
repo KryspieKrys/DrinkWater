@@ -71,30 +71,22 @@ function renderUserPage(userData) {
   // Nama & tanggal
   document.getElementById("user-name-display").textContent = userData.name;
   document.getElementById("today-date").textContent = formatDateDisplay(getTodayString());
-  document.title = `HydroTrack — ${userData.name}`;
+  document.title = `H2O Flow — ${userData.name}`;
 
-  // Progress bar
+  // Progress calculations
   const todayMl  = userData.todayMl  || 0;
   const targetMl = userData.targetMl || 2000;
-  const percent  = Math.min(Math.round((todayMl / targetMl) * 100), 100);
+  let percent  = Math.round((todayMl / targetMl) * 100);
+  if (percent > 100) percent = 100; // Cap at 100% for the circle
 
-  document.getElementById("my-progress-fill").style.width = `${percent}%`;
-  document.getElementById("my-progress-text").textContent =
-    `${todayMl} / ${targetMl} ml (${percent}%)`;
+  // Update Circular Progress Bar
+  const circle = document.getElementById("circular-progress");
+  const degrees = Math.round((percent / 100) * 360);
+  circle.style.background = `conic-gradient(#fff ${degrees}deg, rgba(255,255,255,0.15) ${degrees}deg)`;
 
-  // Status tujuan
-  const statusEl = document.getElementById("goal-status");
-  if (percent >= 100) {
-    statusEl.textContent = "🎉 Target hari ini tercapai! Luar biasa!";
-  } else if (percent >= 75) {
-    statusEl.textContent = "💪 Hampir sampai! Sedikit lagi!";
-  } else if (percent >= 50) {
-    statusEl.textContent = "👍 Sudah setengah jalan, terus semangat!";
-  } else if (percent > 0) {
-    statusEl.textContent = "🚰 Baru mulai, jangan lupa minum ya!";
-  } else {
-    statusEl.textContent = "😴 Belum mulai. Yuk minum sekarang!";
-  }
+  // Texts
+  document.getElementById("my-progress-text").innerHTML = `${todayMl}<span style="font-size:1rem">ml</span>`;
+  document.getElementById("goal-status-text").textContent = `of ${targetMl} ml Goal`;
 
   // Riwayat log
   renderLogs(userData.logs || []);
@@ -129,7 +121,7 @@ function renderLogs(logs) {
   // Tampilkan dari yang terbaru (reverse)
   const reversed = [...logs].reverse();
   list.innerHTML = reversed.map(log =>
-    `<li><span class="log-time">${log.time}</span> — <span class="log-amount">+${log.amount} ml</span></li>`
+    `<li class="log-item"><span class="log-time">${log.time}</span> <span class="log-amount">+${log.amount} ml</span></li>`
   ).join("");
 }
 
@@ -234,11 +226,13 @@ function listenToOthers() {
       const card = document.createElement("div");
       card.className = "other-user-card";
       card.innerHTML = `
-        <p class="other-user-name">${escapeHtml(user.name)}</p>
-        <div class="progress-bar-container">
-          <div class="progress-bar-fill" style="width: ${percent}%;"></div>
+        <div class="other-name-row">
+          <span>${escapeHtml(user.name)}</span>
+          <span>${todayMl}/${targetMl} ml</span>
         </div>
-        <p class="progress-label">${todayMl} / ${targetMl} ml (${percent}%)</p>
+        <div class="linear-track">
+          <div class="linear-fill" style="width: ${percent}%;"></div>
+        </div>
       `;
       container.appendChild(card);
     });

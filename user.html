@@ -5,107 +5,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HydroTrack</title>
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#1a73e8" />
+  <meta name="theme-color" content="#74ebd5" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ===================== LAYAR ERROR (jika ID tidak valid) ===================== -->
-  <div id="error-screen" style="display:none;">
-    <h1>⚠️ Link Tidak Valid</h1>
-    <p>Link yang Anda gunakan tidak ditemukan atau sudah dihapus. Hubungi Owner untuk mendapatkan link baru.</p>
+  <!-- ===================== LAYAR ERROR ===================== -->
+  <div id="error-screen" class="center-screen" style="display:none;">
+    <div class="glass">
+      <h1>⚠️ Link Tidak Valid</h1>
+      <p>Link yang Anda gunakan tidak ditemukan atau sudah dihapus. Hubungi Owner untuk mendapatkan link baru.</p>
+    </div>
   </div>
 
   <!-- ===================== LOADING ===================== -->
-  <div id="loading-screen">
-    <p>⏳ Memuat data...</p>
+  <div id="loading-screen" class="center-screen">
+    <div class="loader"></div>
+    <p>Memuat data...</p>
   </div>
 
   <!-- ===================== HALAMAN UTAMA USER ===================== -->
-  <div id="user-page" style="display:none;">
+  <div id="user-page" class="app-container" style="display:none;">
 
     <!-- Header -->
     <header>
-      <h1>💧 HydroTrack</h1>
-      <p id="user-greeting">Halo, <strong id="user-name-display"></strong>!</p>
-      <p id="today-date"></p>
+      <h1 id="user-greeting">H2O Flow</h1>
+      <p id="today-date">Today, October 26</p>
+      <h2 style="margin-top: 10px;">Stay Hydrated, <span id="user-name-display">Alex</span>!</h2>
     </header>
 
-    <!-- Progress Pribadi -->
-    <section id="my-progress-section">
-      <h2>Progress Hari Ini</h2>
-
-      <div class="big-progress-container">
-        <div id="my-progress-fill" class="big-progress-fill" style="width: 0%;"></div>
-      </div>
-      <p id="my-progress-text">0 / 0 ml (0%)</p>
-
-      <!-- Form input minum -->
-      <div id="drink-form">
-        <label for="drink-amount">Tambah minum (ml):</label>
-        <div id="drink-input-row">
-          <input type="number" id="drink-amount" placeholder="cth: 300" min="1" max="5000" step="50" />
-          <button id="drink-btn" onclick="addDrink()">+ Tambah</button>
-        </div>
-        <!-- Shortcut buttons -->
-        <div id="quick-buttons">
-          <button class="quick-btn" onclick="quickAdd(150)">150ml</button>
-          <button class="quick-btn" onclick="quickAdd(200)">200ml</button>
-          <button class="quick-btn" onclick="quickAdd(250)">250ml</button>
-          <button class="quick-btn" onclick="quickAdd(300)">300ml</button>
-          <button class="quick-btn" onclick="quickAdd(500)">500ml</button>
+    <!-- Circular Progress -->
+    <div class="glass progress-wrapper">
+      <div id="circular-progress" class="circular-progress">
+        <div class="progress-value">
+          <div id="my-progress-text" class="amount">0<span style="font-size:1rem">ml</span></div>
+          <div id="goal-status-text" class="target">of 2000 ml Goal</div>
         </div>
       </div>
+    </div>
 
-      <!-- Status tujuan -->
-      <p id="goal-status"></p>
-    </section>
+    <!-- Quick Add Water -->
+    <div class="glass">
+      <h2>Quick Add Water</h2>
+      <div class="quick-add-grid">
+        <button onclick="quickAdd(150)">+150ml</button>
+        <button onclick="quickAdd(300)">+300ml</button>
+        <button onclick="quickAdd(500)">+500ml</button>
+        <button onclick="quickAdd(750)">+750ml</button>
+      </div>
+
+      <h2 style="margin-top: 20px;">Custom Amount</h2>
+      <div class="input-group">
+        <input type="number" id="drink-amount" placeholder="Enter Amount ml" min="1" max="5000" />
+        <button id="drink-btn" onclick="addDrink()">ADD</button>
+      </div>
+    </div>
+
+    <!-- Target Setting -->
+    <div class="glass">
+      <h2>Daily Goal</h2>
+      <div class="input-group">
+        <input type="number" id="target-input" placeholder="Goal (ml)" min="100" />
+        <button id="save-target-btn" onclick="saveTarget()">Update</button>
+      </div>
+      <p id="target-status" style="font-size: 0.8rem; text-align: right; height: 15px;"></p>
+    </div>
 
     <!-- Riwayat Log Hari Ini -->
-    <section id="log-section">
-      <h2>Riwayat Hari Ini</h2>
-      <ul id="log-list">
+    <div class="glass">
+      <h2>Today's Logs</h2>
+      <ul id="log-list" class="log-list">
         <!-- Diisi oleh JS -->
       </ul>
-      <p id="no-log-msg">Belum ada catatan hari ini. Mulai minum! 💪</p>
-    </section>
+      <p id="no-log-msg">Belum ada catatan hari ini.</p>
+    </div>
 
-    <!-- Target Setting (user bisa ubah target sendiri) -->
-    <section id="target-section">
-      <h2>Ubah Target Harian</h2>
-      <div id="target-form">
-        <input type="number" id="target-input" placeholder="cth: 2000" min="100" step="50" />
-        <span>ml</span>
-        <button id="save-target-btn" onclick="saveTarget()">Simpan</button>
-      </div>
-      <p id="target-status"></p>
-    </section>
-
-    <!-- Progress User Lain (jika punya akses) -->
-    <section id="others-section" style="display:none;">
-      <h2>Progress Teman</h2>
+    <!-- Progress User Lain -->
+    <div id="others-section" class="glass" style="display:none;">
+      <h2>Friends' Progress</h2>
       <div id="others-list">
         <!-- Diisi oleh JS -->
       </div>
-    </section>
+    </div>
 
   </div>
 
-  <!-- Firebase SDK v9 (CDN) -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-  <!-- Config -->
   <script src="firebase-config.js"></script>
-
-  <!-- Logic User -->
   <script src="user.js"></script>
-
-  <!-- Daftarkan Service Worker untuk PWA -->
   <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js").catch(console.error);
-    }
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(console.error);
   </script>
 </body>
 </html>

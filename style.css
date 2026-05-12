@@ -1,173 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 /* ============================================================
-   style.css — Styling dasar (minimal, fungsional)
-   Design lengkap dikerjakan nanti sesuai permintaan owner
+   HYDROTRACK - Glassmorphism Aqua Design
    ============================================================ */
 
-/* --- Reset & Base --- */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
-  font-family: sans-serif;
-  background: #f0f4f8;
-  color: #333;
-  padding: 16px;
-  max-width: 600px;
+  background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+  background-attachment: fixed;
+  color: #fff;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 480px;
   margin: 0 auto;
 }
 
-h1 { font-size: 1.6rem; margin-bottom: 8px; }
-h2 { font-size: 1.2rem; margin: 20px 0 10px; border-bottom: 2px solid #ddd; padding-bottom: 4px; }
-p  { margin: 6px 0; font-size: 0.95rem; }
+/* --- Typography --- */
+h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; opacity: 0.9; }
+p { font-size: 0.95rem; opacity: 0.85; }
 
-/* --- Input & Button --- */
-input[type="text"],
-input[type="number"],
-input[type="password"] {
-  padding: 8px 12px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 100%;
-  margin-bottom: 8px;
-}
-
-button {
-  padding: 8px 16px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
-  background: #1a73e8;
-  color: white;
-  cursor: pointer;
-}
-button:disabled { background: #aaa; cursor: not-allowed; }
-button:hover:not(:disabled) { background: #1558b0; }
-
-/* --- Progress Bar --- */
-.progress-bar-container {
-  background: #ddd;
+/* --- Glassmorphism Utility --- */
+.glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
-  height: 20px;
-  width: 100%;
-  overflow: hidden;
-  margin: 6px 0;
-}
-.progress-bar-fill {
-  background: #1a73e8;
-  height: 100%;
-  border-radius: 20px;
-  transition: width 0.4s ease;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
-/* User page — big progress bar */
-.big-progress-container {
-  background: #ddd;
-  border-radius: 20px;
-  height: 32px;
-  width: 100%;
-  overflow: hidden;
-  margin: 10px 0;
-}
-.big-progress-fill {
-  background: linear-gradient(90deg, #1a73e8, #34a853);
-  height: 100%;
-  border-radius: 20px;
-  transition: width 0.5s ease;
-}
-
-/* --- Quick buttons --- */
-#quick-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-.quick-btn {
-  background: #e8f0fe;
-  color: #1a73e8;
-  border: 1px solid #1a73e8;
-  padding: 6px 12px;
-  font-size: 0.9rem;
-}
-.quick-btn:hover { background: #1a73e8; color: white; }
-
-/* --- Log list --- */
-#log-list { list-style: none; padding: 0; }
-#log-list li {
-  padding: 6px 10px;
-  border-bottom: 1px solid #eee;
-  font-size: 0.9rem;
-}
-.log-time   { color: #888; }
-.log-amount { font-weight: bold; color: #1a73e8; }
-
-/* --- Other user cards --- */
-.other-user-card {
-  background: white;
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-.other-user-name  { font-weight: bold; margin-bottom: 6px; }
-.progress-label   { font-size: 0.85rem; color: #555; }
-
-/* --- Owner tabel --- */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-th, td {
-  padding: 8px 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-th { background: #f5f5f5; font-weight: bold; }
-
-/* --- Form layout Owner --- */
-#add-user-form {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  max-width: 400px;
-}
-#add-user-form label { font-size: 0.9rem; }
-
-/* --- Drink form row --- */
-#drink-input-row {
-  display: flex;
-  gap: 8px;
-}
-#drink-input-row input { flex: 1; margin: 0; }
-
-/* --- Target form --- */
-#target-form {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-#target-form input { max-width: 120px; margin: 0; }
-
-/* --- PIN screen --- */
-#pin-screen {
-  max-width: 320px;
-  margin: 80px auto;
+/* --- Header --- */
+header {
   text-align: center;
+  margin-bottom: 25px;
+  padding-top: 10px;
+}
+
+/* --- Circular Progress Bar --- */
+.progress-wrapper {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.circular-progress {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: conic-gradient(#fff 0deg, rgba(255,255,255,0.2) 0deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 0 20px rgba(255,255,255,0.5);
+  transition: background 0.4s ease-in-out;
+}
+
+.circular-progress::before {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: inset 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.progress-value {
+  position: relative;
+  text-align: center;
+  z-index: 10;
+}
+
+.progress-value .amount {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.progress-value .target {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* --- Buttons & Inputs --- */
+button {
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(5px);
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+input {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 15px;
+  border-radius: 12px;
+  font-size: 1rem;
+  width: 100%;
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input:focus {
+  background: rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* --- Specific Layouts --- */
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.input-group input { flex: 1; margin-bottom: 0; }
+
+.quick-add-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
   gap: 10px;
 }
 
-/* --- Sections spacing --- */
-section { margin-bottom: 28px; }
-
-/* --- Loading & Error --- */
-#loading-screen, #error-screen {
-  text-align: center;
-  padding: 60px 20px;
+.quick-add-grid button {
+  padding: 10px 5px;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.15);
 }
+
+/* --- Log List --- */
+.log-list {
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.log-list::-webkit-scrollbar { width: 4px; }
+.log-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
+
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.log-item:last-child { border-bottom: none; }
+.log-time { opacity: 0.7; font-size: 0.9rem; }
+.log-amount { font-weight: 600; }
+
+/* --- Other Users (Linear Progress) --- */
+.other-user-card {
+  margin-bottom: 15px;
+}
+
+.other-name-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.linear-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.linear-fill {
+  height: 100%;
+  background: #fff;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+/* --- Loading / Error / PIN --- */
+.center-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.loader {
+  border: 4px solid rgba(255,255,255,0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* --- Owner Dashboard Specifics --- */
+.owner-table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+th { font-weight: 600; opacity: 0.9; }
+
+.checkbox-custom { width: 20px; height: 20px; }
