@@ -88,12 +88,11 @@ function renderUserPage(userData) {
   const todayMl  = userData.todayMl  || 0;
   const targetMl = userData.targetMl || 2000;
   let percent  = Math.round((todayMl / targetMl) * 100);
-  if (percent > 100) percent = 100; // Cap at 100% for the circle
+  if (percent > 100) percent = 100; // Cap at 100%
 
-  // Update Circular Progress Bar
-  const circle = document.getElementById("circular-progress");
-  const degrees = Math.round((percent / 100) * 360);
-  circle.style.background = `conic-gradient(#fff ${degrees}deg, rgba(255,255,255,0.15) ${degrees}deg)`;
+  // Update Animated Water Glass
+  const waterFill = document.getElementById("water-fill");
+  waterFill.style.height = `${percent}%`;
 
   // Texts
   document.getElementById("my-progress-text").innerHTML = `${todayMl}<span style="font-size:1rem">ml</span>`;

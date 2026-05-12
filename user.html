@@ -34,9 +34,17 @@
       <h2 style="margin-top: 10px;">Stay Hydrated, <span id="user-name-display">Alex</span>!</h2>
     </header>
 
-    <!-- Circular Progress -->
-    <div class="glass progress-wrapper">
-      <div id="circular-progress" class="circular-progress">
+    <!-- Animated Water Glass -->
+    <div class="progress-wrapper">
+      <div class="water-glass">
+        <!-- Air yang naik turun -->
+        <div id="water-fill" class="water-fill">
+          <!-- Dua lapis gelombang (SVG murni) -->
+          <div class="water-wave-2"></div>
+          <div class="water-wave-1"></div>
+        </div>
+        
+        <!-- Teks Persentase -->
         <div class="progress-value">
           <div id="my-progress-text" class="amount">0<span style="font-size:1rem">ml</span></div>
           <div id="goal-status-text" class="target">of 2000 ml Goal</div>
