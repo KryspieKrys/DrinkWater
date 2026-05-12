@@ -87,16 +87,23 @@ function renderUserPage(userData) {
   // Progress calculations
   const todayMl  = userData.todayMl  || 0;
   const targetMl = userData.targetMl || 2000;
-  let percent  = Math.round((todayMl / targetMl) * 100);
-  if (percent > 100) percent = 100; // Cap at 100%
+  let percent = Math.round((todayMl / targetMl) * 100);
+  if (percent > 100) percent = 100;
 
-  // Update Animated Water Glass
-  const waterFill = document.getElementById("water-fill");
-  waterFill.style.height = `${percent}%`;
+  // Move the SVG water level
+  // Glass interior: y=22 (top) to y=312 (bottom) = 290px tall
+  // translateY=290 → empty (0%), translateY=22 → full (100%)
+  const waterY = 312 - (290 * percent / 100);
+  const waterGroup = document.getElementById('water-group');
+  if (waterGroup) waterGroup.style.transform = `translateY(${waterY}px)`;
 
-  // Texts
-  document.getElementById("my-progress-text").innerHTML = `${todayMl}<span style="font-size:1rem">ml</span>`;
-  document.getElementById("goal-status-text").textContent = `of ${targetMl} ml Goal`;
+  // Update SVG text labels
+  const amountEl = document.getElementById('svg-amount');
+  const goalEl   = document.getElementById('svg-goal');
+  const pctEl    = document.getElementById('svg-percent');
+  if (amountEl) amountEl.textContent = `${todayMl}ml`;
+  if (goalEl)   goalEl.textContent   = `of ${targetMl} ml Goal`;
+  if (pctEl)    pctEl.textContent    = `${percent}%`;
 
   // Riwayat log
   renderLogs(userData.logs || []);
