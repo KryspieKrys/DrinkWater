@@ -25,4 +25,4 @@ const OWNER_PIN = "1234";
 // ============================================================
 // NAMA APLIKASI — tampil di browser tab & PWA
 // ============================================================
-const APP_NAME = "HydroTrack";
+const APP_NAME = "DRINKWATTEAAH";

@@ -82,7 +82,7 @@ function renderUserPage(userData) {
   // Nama & tanggal
   document.getElementById("user-name-display").textContent = userData.name;
   document.getElementById("today-date").textContent = formatDateDisplay(getTodayString());
-  document.title = `H2O Flow — ${userData.name}`;
+  document.title = `DRINKWATTEAAH — ${userData.name}`;
 
   // Progress calculations
   const todayMl  = userData.todayMl  || 0;
