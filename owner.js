@@ -77,12 +77,17 @@ function listenToUsers() {
         </td>
         <td>${user.targetMl} ml</td>
         <td>
-          <input 
-            type="checkbox" 
-            ${user.canSeeOthers ? "checked" : ""} 
-            onchange="toggleCanSeeOthers('${userId}', this.checked)"
-            title="Toggle izin lihat progress user lain"
-          />
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <input 
+              type="checkbox" 
+              ${user.canSeeOthers ? "checked" : ""} 
+              onchange="toggleCanSeeOthers('${userId}', this.checked)"
+              style="width: 18px; height: 18px; cursor: pointer;"
+            />
+            <span style="font-size: 0.85rem; font-weight: 600; color: ${user.canSeeOthers ? '#6bcb77' : '#ff6b6b'};">
+              ${user.canSeeOthers ? 'ON' : 'OFF'}
+            </span>
+          </div>
         </td>
         <td>
           <button onclick="copyLink('${link}', this)">Salin Link</button>
