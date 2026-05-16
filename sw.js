@@ -3,7 +3,7 @@
 // Memungkinkan app di-install ke Home Screen HP
 // ============================================================
 
-const CACHE_NAME = "hydrotrack-v18";
+const CACHE_NAME = "hydrotrack-v19";
 const ASSETS_TO_CACHE = [
   "./user.html",
   "./user.js",

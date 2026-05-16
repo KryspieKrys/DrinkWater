@@ -2,8 +2,6 @@
   "name": "DRINKWATTEAAH",
   "short_name": "DRINKWAT",
   "description": "Pengingat minum air harian — track progress bersama!",
-  "start_url": "./user.html",
-  "scope": "./",
   "display": "standalone",
   "background_color": "#74ebd5",
   "theme_color": "#74ebd5",
