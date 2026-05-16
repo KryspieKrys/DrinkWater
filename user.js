@@ -36,6 +36,9 @@ window.onload = async function () {
     return;
   }
 
+  // Preload semua gambar popup agar tidak loading saat ditampilkan
+  preloadAllImages();
+
   // 2. Dengarkan perubahan realtime untuk user ini
   usersCol.doc(currentUserId).onSnapshot(async (doc) => {
     if (!doc.exists) {
