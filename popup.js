@@ -90,16 +90,13 @@ function showMemePopup() {
 // ============================================================
 // CONGRATS POPUP — total tampil 6 detik + confetti
 // ============================================================
-let congratsShownToday = false;
-
 function showCongratsPopup() {
-  if (localStorage.getItem(CONGRATS_TODAY_KEY) === todayStr()) return;
-  if (congratsShownToday) return;
-  congratsShownToday = true;
-
+  // Guard: jangan tampil jika overlay sudah terbuka
   const overlay = document.getElementById("congrats-overlay");
-  const img     = document.getElementById("congrats-img");
-  const canvas  = document.getElementById("confetti-canvas");
+  if (!overlay || overlay.style.display === "flex") return;
+
+  const img    = document.getElementById("congrats-img");
+  const canvas = document.getElementById("confetti-canvas");
 
   const chosenSrc = pickRandom(CONGRATS_IMAGES);
   if (_preloadedImages[chosenSrc] && _preloadedImages[chosenSrc].complete) {
@@ -127,8 +124,6 @@ function showCongratsPopup() {
     overlay.style.display = "none";
     img.src = "";
   }, 6050);
-
-  localStorage.setItem(CONGRATS_TODAY_KEY, todayStr());
 }
 
 // ============================================================

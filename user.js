@@ -8,9 +8,10 @@ const db = firebase.firestore();
 const usersCol = db.collection("users");
 
 // --- State global ---
-let currentUserId = null;
+let currentUserId   = null;
 let currentUserData = null;
 let allUsersListener = null;
+let previousTodayMl = null; // Untuk deteksi kapan user BARU menyeberangi target
 
 // ============================================================
 // INISIALISASI — Jalankan saat halaman dibuka
@@ -114,10 +115,12 @@ function renderUserPage(userData) {
   if (goalEl)   goalEl.textContent   = `of ${targetMl} ml Goal`;
   if (pctEl)    pctEl.textContent    = `${percent}%`;
 
-  // Trigger congrats jika target tercapai
-  if (todayMl >= targetMl) {
-    setTimeout(showCongratsPopup, 500);
+  // Trigger congrats HANYA saat user baru saja menyeberangi batas target
+  // (sebelumnya di bawah target, sekarang sudah >= target)
+  if (previousTodayMl !== null && previousTodayMl < targetMl && todayMl >= targetMl) {
+    setTimeout(showCongratsPopup, 600);
   }
+  previousTodayMl = todayMl; // Simpan nilai saat ini untuk perbandingan berikutnya
 
   // Riwayat log
   renderLogs(userData.logs || []);
