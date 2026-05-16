@@ -11,7 +11,8 @@ const usersCol = db.collection("users");
 let currentUserId   = null;
 let currentUserData = null;
 let allUsersListener = null;
-let previousTodayMl = null; // Untuk deteksi kapan user BARU menyeberangi target
+let previousTodayMl          = null; // nilai todayMl dari render sebelumnya
+let congratsShownThisSession = false; // sudah tampil congrats di sesi ini?
 
 // ============================================================
 // INISIALISASI — Jalankan saat halaman dibuka
@@ -72,13 +73,14 @@ window.onload = async function () {
 async function checkAndResetIfNewDay(userData) {
   const today = getTodayString();
   if (userData.lastResetDate !== today) {
-    // Hari baru! Reset progress
+    // Hari baru! Reset progress & state congrats
+    previousTodayMl          = null;
+    congratsShownThisSession = false;
     await usersCol.doc(currentUserId).update({
       todayMl:       0,
       logs:          [],
       lastResetDate: today,
     });
-    // Data akan di-update via onSnapshot, tidak perlu return apapun
   }
 }
 
@@ -115,12 +117,22 @@ function renderUserPage(userData) {
   if (goalEl)   goalEl.textContent   = `of ${targetMl} ml Goal`;
   if (pctEl)    pctEl.textContent    = `${percent}%`;
 
-  // Trigger congrats HANYA saat user baru saja menyeberangi batas target
-  // (sebelumnya di bawah target, sekarang sudah >= target)
-  if (previousTodayMl !== null && previousTodayMl < targetMl && todayMl >= targetMl) {
-    setTimeout(showCongratsPopup, 600);
+  // -------------------------------------------------------
+  // CONGRATS LOGIC:
+  // Tampilkan congrats ketika:
+  //   a) User baru melewati threshold (crossing dari bawah ke atas), ATAU
+  //   b) User buka app dan sudah di atas target (first load)
+  // Tapi hanya 1x per sesi (per buka-tutup app)
+  // -------------------------------------------------------
+  const isFirstRender  = (previousTodayMl === null);
+  const justCrossed    = !isFirstRender && previousTodayMl < targetMl && todayMl >= targetMl;
+  const alreadyAtGoal  = isFirstRender && todayMl >= targetMl;
+
+  if ((justCrossed || alreadyAtGoal) && !congratsShownThisSession) {
+    congratsShownThisSession = true;
+    setTimeout(showCongratsPopup, 800);
   }
-  previousTodayMl = todayMl; // Simpan nilai saat ini untuk perbandingan berikutnya
+  previousTodayMl = todayMl;
 
   // Riwayat log
   renderLogs(userData.logs || []);
