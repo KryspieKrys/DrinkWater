@@ -102,19 +102,14 @@ function renderUserPage(userData) {
   let percent = Math.round((todayMl / targetMl) * 100);
   if (percent > 100) percent = 100;
 
-  // Move the SVG water level using native SVG transform attribute (more reliable than CSS)
+  // Move the SVG water level
+  // Glass interior: y=22 (top) to y=312 (bottom) = 290px tall
+  // translateY=290 → empty (0%), translateY=22 → full (100%)
   const waterY = 312 - (290 * percent / 100);
   const waterGroup = document.getElementById('water-group');
-  if (waterGroup) waterGroup.setAttribute('transform', `translate(0, ${waterY})`);
-
-  // Bebek ikut naik-turun bersama permukaan air
-  // duck image di dalam group ada di y=-55, jadi bottom bebek ada di y=11 dalam group space
-  // Supaya bottom bebek pas di permukaan air: group translateY = waterY - 11
-  const duckGroup = document.getElementById('duck-group');
-  if (duckGroup) {
-    const duckY = Math.max(22, Math.min(waterY - 11, 290));
-    duckGroup.setAttribute('transform', `translate(0, ${duckY})`);
-  }
+  const duckGroup  = document.getElementById('duck-group');
+  if (waterGroup) waterGroup.style.transform = `translateY(${waterY}px)`;
+  if (duckGroup)  duckGroup.style.transform  = `translateY(${waterY}px)`;
 
   // Update SVG text labels
   const amountEl = document.getElementById('svg-amount');
