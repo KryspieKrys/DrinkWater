@@ -47,7 +47,7 @@
 
         <!-- Clipped water fill area -->
         <g clip-path="url(#glass-clip)">
-          <g id="water-group" style="transform: translateY(290px);">
+          <g id="water-group" transform="translate(0, 312)">
             <!-- Wave back -->
             <path class="wave-back" d="M-200,0 Q-150,-10 -100,0 T0,0 T100,0 T200,0 T300,0 T400,0 L400,400 L-200,400 Z" fill="rgba(255,255,255,0.2)"/>
             <!-- Wave front -->
@@ -70,7 +70,7 @@
 
         <!-- Bebek: DI LUAR clip-path agar tidak terpotong saat di atas rim gelas -->
         <!-- y diatur oleh JS mengikuti posisi air via duck-group -->
-        <g id="duck-group">
+        <g id="duck-group" transform="translate(0, 301)">
           <image class="duck-swim" href="SwimDuck.png" x="67" y="-55" width="66" height="66"/>
         </g>
 
