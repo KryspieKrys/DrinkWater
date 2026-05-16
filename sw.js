@@ -3,14 +3,17 @@
 // Memungkinkan app di-install ke Home Screen HP
 // ============================================================
 
-const CACHE_NAME = "hydrotrack-v16";
+const CACHE_NAME = "hydrotrack-v18";
 const ASSETS_TO_CACHE = [
   "./user.html",
   "./user.js",
+  "./popup.js",
   "./firebase-config.js",
   "./style.css",
   "./manifest.json",
-  "./SwimDuck.png"
+  "./SwimDuck.png",
+  "./icon-192.png",
+  "./icon-512.png"
 ];
 
 // Install: simpan file ke cache

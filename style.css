@@ -17,12 +17,15 @@ body {
   color: #fff;
   min-height: 100vh;
   min-height: 100dvh; /* dynamic viewport height — penting untuk mobile! */
-  padding: 16px 14px;
+  /* ✅ iOS Safe Area: padding tidak tertutup notch / home bar */
+  padding: max(16px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
   display: flex;
   justify-content: center;
   align-items: flex-start;
   -webkit-tap-highlight-color: transparent; /* hapus highlight biru saat tap */
   touch-action: pan-y;
+  -webkit-overflow-scrolling: touch; /* scroll smooth di iOS */
+  overscroll-behavior-y: none; /* cegah bounce scroll di iOS saat bukan intent */
 }
 
 .app-container {
@@ -182,6 +185,7 @@ input:focus {
   list-style: none;
   max-height: 200px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* scroll smooth di iOS */
   padding-right: 5px;
 }
 
