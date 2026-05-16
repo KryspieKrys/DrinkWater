@@ -43,6 +43,7 @@ window.onload = async function () {
       return;
     }
 
+    const isFirstLoad = (currentUserData === null);
     currentUserData = { id: doc.id, ...doc.data() };
 
     // 3. Cek apakah perlu reset harian
@@ -53,6 +54,11 @@ window.onload = async function () {
 
     // 5. Isi target input dengan nilai saat ini
     document.getElementById("target-input").value = currentUserData.targetMl;
+
+    // 6. Meme popup — tampil 1x saat pertama buka
+    if (isFirstLoad) {
+      setTimeout(showMemePopup, 300); // sedikit delay biar halaman render dulu
+    }
   });
 };
 
@@ -104,6 +110,11 @@ function renderUserPage(userData) {
   if (amountEl) amountEl.textContent = `${todayMl}ml`;
   if (goalEl)   goalEl.textContent   = `of ${targetMl} ml Goal`;
   if (pctEl)    pctEl.textContent    = `${percent}%`;
+
+  // Trigger congrats jika target tercapai
+  if (todayMl >= targetMl) {
+    setTimeout(showCongratsPopup, 500);
+  }
 
   // Riwayat log
   renderLogs(userData.logs || []);
