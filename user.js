@@ -109,13 +109,13 @@ function renderUserPage(userData) {
   const waterGroup = document.getElementById('water-group');
   if (waterGroup) waterGroup.style.transform = `translateY(${waterY}px)`;
 
-  // Posisi bebek: mengikuti permukaan air, TIDAK di-clip (overflow=visible)
-  // y bebek = waterY - 55 agar bebek duduk di permukaan air (bottom bebek = waterY + 11)
-  // Clamp ke bawah: bebek tidak boleh lebih rendah dari dasar gelas (y=248)
-  const duckEl = document.getElementById('swim-duck');
-  if (duckEl) {
-    const duckY = Math.min(248, waterY - 55);
-    duckEl.setAttribute('y', duckY);
+  // Posisi bebek: mengikuti permukaan air persis seperti waterGroup
+  const duckGroup = document.getElementById('duck-group');
+  if (duckGroup) {
+    // Supaya bebek tidak tembus dasar gelas (karena duckY bawaan image adalah -55)
+    // saat waterY 290, posisi y absolute adalah 235 (pas di dasar gelas)
+    const duckY = Math.min(290, waterY);
+    duckGroup.style.transform = `translateY(${duckY}px)`;
   }
 
   // Update SVG text labels

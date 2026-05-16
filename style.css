@@ -83,7 +83,7 @@ header {
   margin: 20px 0;
 }
 
-#water-group {
+#water-group, #duck-group {
   transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 

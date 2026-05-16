@@ -69,8 +69,10 @@
         <path d="M 152,36 Q 155,80 153,130" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-linecap="round"/>
 
         <!-- Bebek: DI LUAR clip-path agar tidak terpotong saat di atas rim gelas -->
-        <!-- y diatur oleh JS mengikuti posisi air -->
-        <image id="swim-duck" class="duck-swim" href="SwimDuck.png" x="67" y="257" width="66" height="66"/>
+        <!-- y diatur oleh JS mengikuti posisi air via duck-group -->
+        <g id="duck-group">
+          <image class="duck-swim" href="SwimDuck.png" x="67" y="-55" width="66" height="66"/>
+        </g>
 
         <!-- Text overlay -->
         <text id="svg-amount" x="100" y="168" text-anchor="middle" font-family="Poppins,sans-serif" font-size="30" font-weight="700" fill="white">0ml</text>
