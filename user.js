@@ -107,9 +107,16 @@ function renderUserPage(userData) {
   // translateY=290 → empty (0%), translateY=22 → full (100%)
   const waterY = 312 - (290 * percent / 100);
   const waterGroup = document.getElementById('water-group');
-  const duckGroup  = document.getElementById('duck-group');
   if (waterGroup) waterGroup.style.transform = `translateY(${waterY}px)`;
-  if (duckGroup)  duckGroup.style.transform  = `translateY(${waterY}px)`;
+
+  // Posisi bebek: mengikuti permukaan air, TIDAK di-clip (overflow=visible)
+  // y bebek = waterY - 55 agar bebek duduk di permukaan air (bottom bebek = waterY + 11)
+  // Clamp ke bawah: bebek tidak boleh lebih rendah dari dasar gelas (y=248)
+  const duckEl = document.getElementById('swim-duck');
+  if (duckEl) {
+    const duckY = Math.min(248, waterY - 55);
+    duckEl.setAttribute('y', duckY);
+  }
 
   // Update SVG text labels
   const amountEl = document.getElementById('svg-amount');

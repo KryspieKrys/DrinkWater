@@ -38,7 +38,7 @@
 
     <!-- SVG Water Glass -->
     <div class="progress-wrapper">
-      <svg id="water-glass-svg" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg" width="200" height="340">
+      <svg id="water-glass-svg" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg" width="200" height="340" overflow="visible">
         <defs>
           <clipPath id="glass-clip">
             <path d="M 34,22 L 166,22 L 145,312 L 55,312 Z"/>
@@ -57,7 +57,6 @@
           </g>
         </g>
 
-
         <!-- Glass outline (drawn over water) -->
         <path d="M 30,18 L 170,18 L 148,314 L 52,314 Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linejoin="round"/>
         <!-- Top rim -->
@@ -69,10 +68,9 @@
         <!-- Right shine -->
         <path d="M 152,36 Q 155,80 153,130" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-linecap="round"/>
 
-        <!-- Duck (in front of glass outline, behind text) -->
-        <g id="duck-group" style="transform: translateY(290px);">
-          <image class="duck-swim" href="SwimDuck.png" x="67" y="-55" width="66" height="66"/>
-        </g>
+        <!-- Bebek: DI LUAR clip-path agar tidak terpotong saat di atas rim gelas -->
+        <!-- y diatur oleh JS mengikuti posisi air -->
+        <image id="swim-duck" class="duck-swim" href="SwimDuck.png" x="67" y="257" width="66" height="66"/>
 
         <!-- Text overlay -->
         <text id="svg-amount" x="100" y="168" text-anchor="middle" font-family="Poppins,sans-serif" font-size="30" font-weight="700" fill="white">0ml</text>
