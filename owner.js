@@ -101,7 +101,6 @@ function listenToUsers() {
 async function addUser() {
   const name     = document.getElementById("new-name").value.trim();
   const targetMl = parseInt(document.getElementById("new-target").value);
-  const canSee   = document.getElementById("new-can-see").checked;
   const errEl    = document.getElementById("add-user-error");
 
   // Validasi
