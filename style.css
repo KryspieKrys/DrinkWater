@@ -340,7 +340,107 @@ th { font-weight: 600; opacity: 0.9; }
   100% { transform: scale(0.05); opacity: 0; }
 }
 
-/* --- Animasi congrats: pop-in besar + confetti --- */
+/* --------------------------------------------------------
+   DAILY REPORT POPUP – overlay & card styling
+   -------------------------------------------------------- */
+#daily-report-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  backdrop-filter: blur(6px);
+}
+
+.daily-report-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px 25px;
+  text-align: center;
+  color: #fff;
+  width: min(90vw, 340px);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.4);
+}
+
+.dr-emoji { font-size: 3rem; margin-bottom: 8px; }
+.dr-label { font-size: 0.85rem; opacity: 0.85; margin-bottom: 4px; }
+.dr-title { font-size: 1.4rem; font-weight: 600; margin: 6px 0; }
+.dr-amount { font-size: 1.2rem; font-weight: 500; margin: 8px 0; }
+.dr-target-text { font-size: 0.9rem; opacity: 0.8; }
+
+.dr-bar-track {
+  background: rgba(255,255,255,0.2);
+  height: 8px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.dr-bar-fill {
+  background: #fff;
+  height: 100%;
+  width: 0%;
+  transition: width 0.8s ease;
+}
+
+.dr-percent { font-size: 0.85rem; opacity: 0.9; margin-top: 4px; }
+.dr-message { font-size: 0.95rem; margin: 8px 0; }
+.dr-btn {
+  background: rgba(255,255,255,0.25);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+.dr-btn:hover { background: rgba(255,255,255,0.35); }
+
+/* --------------------------------------------------------
+   HISTORY LIST – card styling
+   -------------------------------------------------------- */
+.history-item {
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px 10px;
+  margin-bottom: 10px;
+}
+.history-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+.history-date { opacity: 0.9; }
+.history-badge {
+  font-size: 0.85rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+.badge-hit { background: rgba(0,200,0,0.4); }
+.badge-miss { background: rgba(200,0,0,0.4); }
+.history-ml { font-size: 0.85rem; opacity: 0.8; margin-bottom: 4px; }
+.history-track {
+  background: rgba(255,255,255,0.2);
+  height: 6px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.history-fill { background: #fff; height: 100%; width: 0%; transition: width 0.5s; }
+
+/* --------------------------------------------------------
+   WATER DRAIN ANIMATION – ensure transition works
+   -------------------------------------------------------- */
+#water-group, #duck-group {
+  transition: transform 1s cubic-bezier(0.4,0,0.2,1);
+}
+
 .popup-img.congrats-popin {
   animation: congratsIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }

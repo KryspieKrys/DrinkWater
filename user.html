@@ -142,6 +142,14 @@
       </div>
     </div>
 
+    <!-- Riwayat Harian (History) -->
+    <div id="history-section" class="glass" style="display:none;">
+      <h2>📅 Riwayat Harian</h2>
+      <div id="history-list">
+        <!-- Diisi oleh JS -->
+      </div>
+    </div>
+
   </div>
 
   <!-- ===================== MEME POPUP (saat buka app) ===================== -->
@@ -153,6 +161,24 @@
   <div id="congrats-overlay" class="popup-overlay" style="display:none;">
     <canvas id="confetti-canvas"></canvas>
     <img id="congrats-img" class="popup-img" src="" alt="" />
+  </div>
+
+  <!-- ===================== DAILY REPORT POPUP (rekap pergantian hari) ===================== -->
+  <div id="daily-report-overlay" class="popup-overlay" style="display:none;">
+    <div class="daily-report-card">
+      <div id="dr-emoji" class="dr-emoji">💧</div>
+      <p class="dr-label">Rekap Kemarin</p>
+      <h2 id="dr-title" class="dr-title">Target Tercapai!</h2>
+      <p id="dr-date" class="dr-date"></p>
+      <div id="dr-amount" class="dr-amount">0 ml</div>
+      <p id="dr-target-text" class="dr-target-text">dari target 2000 ml</p>
+      <div class="dr-bar-track">
+        <div id="dr-bar-fill" class="dr-bar-fill"></div>
+      </div>
+      <p id="dr-percent" class="dr-percent">0%</p>
+      <p id="dr-message" class="dr-message"></p>
+      <button onclick="closeDailyReport()" class="dr-btn">Semangat Hari Ini! 💪</button>
+    </div>
   </div>
 
   <!-- Firebase SDK -->
