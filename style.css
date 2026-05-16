@@ -50,9 +50,29 @@ p { font-size: 0.95rem; opacity: 0.85; }
 
 /* --- Header --- */
 header {
+  position: relative;
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   padding-top: 10px;
+}
+
+/* Username badge — top-left corner */
+.user-badge {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  max-width: 45%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* --- SVG Water Glass --- */
@@ -81,6 +101,21 @@ header {
 }
 
 /* Keep .progress-value etc unused — SVG handles text now */
+
+/* --- Duck animation --- */
+.duck-swim {
+  animation: duckFloat 2.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center center;
+}
+
+@keyframes duckFloat {
+  0%   { transform: translate(0px,  0px) rotate(-4deg); }
+  25%  { transform: translate(4px, -4px) rotate(0deg);  }
+  50%  { transform: translate(0px,  0px) rotate(4deg);  }
+  75%  { transform: translate(-4px,-4px) rotate(0deg);  }
+  100% { transform: translate(0px,  0px) rotate(-4deg); }
+}
 
 /* --- Buttons & Inputs --- */
 button {
