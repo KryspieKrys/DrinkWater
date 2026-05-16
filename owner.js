@@ -78,15 +78,9 @@ function listenToUsers() {
         <td>${user.targetMl} ml</td>
         <td>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <input 
-              type="checkbox" 
-              ${user.canSeeOthers ? "checked" : ""} 
-              onchange="toggleCanSeeOthers('${userId}', this.checked)"
-              style="width: 18px; height: 18px; cursor: pointer;"
-            />
-            <span style="font-size: 0.85rem; font-weight: 600; color: ${user.canSeeOthers ? '#6bcb77' : '#ff6b6b'};">
-              ${user.canSeeOthers ? 'ON' : 'OFF'}
-            </span>
+            <button onclick="openFriendsModal('${userId}', '${escapeHtml(user.name)}')" style="padding: 6px 12px; font-size: 0.85rem;">
+              👥 Pilih (${user.friends ? user.friends.length : 0})
+            </button>
           </div>
         </td>
         <td>
@@ -131,16 +125,16 @@ async function addUser() {
     await usersCol.add({
       name:          name,
       targetMl:      targetMl,
-      canSeeOthers:  canSee,
+      friends:       [], // Default tidak bisa melihat siapa-siapa
       todayMl:       0,
       lastResetDate: getTodayString(),
       logs:          [],
+      history:       []
     });
 
     // Reset form
     document.getElementById("new-name").value    = "";
     document.getElementById("new-target").value  = "";
-    document.getElementById("new-can-see").checked = true;
   } catch (err) {
     errEl.textContent = "Gagal menambah user: " + err.message;
     errEl.style.display = "block";
@@ -151,13 +145,79 @@ async function addUser() {
 }
 
 // ============================================================
-// TOGGLE canSeeOthers
+// LOGIKA MODAL KELOLA TEMAN
 // ============================================================
-async function toggleCanSeeOthers(userId, value) {
+let currentEditingUserId = null;
+let currentEditingUserFriends = [];
+
+async function openFriendsModal(userId, userName) {
+  currentEditingUserId = userId;
+  document.getElementById("modal-user-name").textContent = userName;
+  
+  const listContainer = document.getElementById("friends-checkbox-list");
+  listContainer.innerHTML = "<p>Memuat...</p>";
+  document.getElementById("friends-modal").style.display = "flex";
+
   try {
-    await usersCol.doc(userId).update({ canSeeOthers: value });
+    // Ambil data user yang sedang diedit untuk tahu siapa temannya saat ini
+    const userDoc = await usersCol.doc(userId).get();
+    currentEditingUserFriends = userDoc.data().friends || [];
+
+    // Ambil semua user
+    const snapshot = await usersCol.orderBy("name").get();
+    listContainer.innerHTML = "";
+    
+    if (snapshot.size <= 1) {
+      listContainer.innerHTML = "<p>Belum ada user lain.</p>";
+      return;
+    }
+
+    snapshot.forEach((doc) => {
+      if (doc.id === userId) return; // Jangan tampilkan diri sendiri
+      
+      const otherUser = doc.data();
+      const isChecked = currentEditingUserFriends.includes(doc.id) ? "checked" : "";
+      
+      const item = document.createElement("label");
+      item.style.display = "flex";
+      item.style.alignItems = "center";
+      item.style.gap = "10px";
+      item.style.padding = "8px 0";
+      item.style.borderBottom = "1px solid rgba(255,255,255,0.1)";
+      item.style.cursor = "pointer";
+      
+      item.innerHTML = `
+        <input type="checkbox" class="friend-checkbox" value="${doc.id}" ${isChecked} style="width: 18px; height: 18px;" />
+        <span>${escapeHtml(otherUser.name)}</span>
+      `;
+      listContainer.appendChild(item);
+    });
+
   } catch (err) {
-    alert("Gagal mengubah izin: " + err.message);
+    listContainer.innerHTML = "<p>Gagal memuat daftar user.</p>";
+  }
+}
+
+function closeFriendsModal() {
+  document.getElementById("friends-modal").style.display = "none";
+  currentEditingUserId = null;
+}
+
+async function saveFriends() {
+  if (!currentEditingUserId) return;
+  
+  const checkboxes = document.querySelectorAll('.friend-checkbox');
+  const selectedFriends = [];
+  
+  checkboxes.forEach(cb => {
+    if (cb.checked) selectedFriends.push(cb.value);
+  });
+  
+  try {
+    await usersCol.doc(currentEditingUserId).update({ friends: selectedFriends });
+    closeFriendsModal();
+  } catch (err) {
+    alert("Gagal menyimpan teman: " + err.message);
   }
 }
 

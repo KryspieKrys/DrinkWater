@@ -36,11 +36,6 @@
         <label for="new-target">Target Harian (ml):</label>
         <input type="number" id="new-target" placeholder="cth: 2000" min="100" step="50" />
 
-        <label for="new-can-see" style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
-          <input type="checkbox" id="new-can-see" class="checkbox-custom" checked style="width: auto;" />
-          Boleh lihat progress user lain?
-        </label>
-
         <button id="add-user-btn" onclick="addUser()">+ Tambah User</button>
         <p id="add-user-error" style="color:#ffcccc; display:none; margin-top:10px;"></p>
       </div>
@@ -57,7 +52,7 @@
               <th>Nama</th>
               <th>Progress</th>
               <th>Target</th>
-              <th>Friends' Progress</th>
+              <th>Atur Teman</th>
               <th>Link</th>
               <th>Aksi</th>
             </tr>
@@ -68,6 +63,23 @@
         </table>
       </div>
       <p id="no-users-msg" style="display:none;">Belum ada user. Tambahkan user baru di atas.</p>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL KELOLA TEMAN ===================== -->
+  <div id="friends-modal" class="popup-overlay" style="display:none;">
+    <div class="glass" style="max-width: 400px; width: 90%; color: #fff;">
+      <h2 style="margin-bottom: 10px;">Atur Teman: <span id="modal-user-name"></span></h2>
+      <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 15px;">Pilih siapa saja yang dapat dilihat progresnya oleh user ini.</p>
+      
+      <div id="friends-checkbox-list" style="max-height: 300px; overflow-y: auto; text-align: left; margin-bottom: 15px; padding-right: 10px;">
+        <!-- Checkboxes dimuat via JS -->
+      </div>
+      
+      <div style="display: flex; gap: 10px;">
+        <button onclick="closeFriendsModal()" style="flex: 1; background: rgba(255,255,255,0.1);">Batal</button>
+        <button onclick="saveFriends()" style="flex: 1; background: rgba(255,255,255,0.3);">Simpan</button>
+      </div>
     </div>
   </div>
 

@@ -144,7 +144,10 @@
 
     <!-- Riwayat Harian (History) -->
     <div id="history-section" class="glass" style="display:none;">
-      <h2>📅 Riwayat Harian</h2>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h2 style="margin-bottom: 0;">📅 Riwayat Harian</h2>
+        <button onclick="forceDayReset()" style="padding: 4px 8px; font-size: 0.7rem; background: rgba(255,255,255,0.1); border-radius: 6px;">Tes Reset</button>
+      </div>
       <div id="history-list">
         <!-- Diisi oleh JS -->
       </div>

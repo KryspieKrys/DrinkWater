@@ -212,10 +212,10 @@ function renderUserPage(userData, skipCongrats = false) {
   // Riwayat semua hari
   renderHistory(userData.history || []);
 
-  // Lihat user lain (jika punya akses)
-  if (userData.canSeeOthers) {
+  // Lihat user lain (jika punya akses/ada teman)
+  if (userData.friends && userData.friends.length > 0) {
     document.getElementById("others-section").style.display = "block";
-    listenToOthers();
+    listenToOthers(userData.friends);
   } else {
     document.getElementById("others-section").style.display = "none";
     if (allUsersListener) {
@@ -327,17 +327,22 @@ async function saveTarget() {
 }
 
 // ============================================================
-// LIHAT PROGRESS USER LAIN (realtime)
+// LIHAT PROGRESS USER LAIN (realtime) - TERFILTER OLEH DAFTAR TEMAN
 // ============================================================
-function listenToOthers() {
-  if (allUsersListener) return; // Sudah mendengarkan, jangan dobel
+function listenToOthers(friendIds) {
+  if (allUsersListener) {
+    allUsersListener(); // Hapus listener lama jika daftar teman berubah
+  }
 
+  // Karena Firestore `in` query maksimal 10 elemen, kita fetch semua lalu filter di client
+  // (Lebih aman untuk jumlah teman > 10)
   allUsersListener = usersCol.orderBy("name").onSnapshot((snapshot) => {
     const container = document.getElementById("others-list");
     container.innerHTML = "";
 
     snapshot.forEach((doc) => {
       if (doc.id === currentUserId) return; // Skip diri sendiri
+      if (!friendIds.includes(doc.id)) return; // Skip jika bukan teman
 
       const user = doc.data();
       const todayMl  = user.todayMl  || 0;
@@ -359,7 +364,7 @@ function listenToOthers() {
     });
 
     if (container.innerHTML === "") {
-      container.innerHTML = "<p>Belum ada teman lain yang terdaftar.</p>";
+      container.innerHTML = "<p>Tidak ada teman yang bisa dilihat saat ini.</p>";
     }
   });
 }
@@ -483,5 +488,26 @@ function renderHistory(history) {
       </div>
     `;
   }).join('');
+}
+
+// ============================================================
+// DEBUG: FORCE RESET (Untuk menguji history)
+// ============================================================
+async function forceDayReset() {
+  if (!confirm("Paksa ganti hari? Ini akan memindahkan data hari ini ke History dan mengosongkan botol.")) return;
+  try {
+    // Ubah lastResetDate ke kemarin agar onSnapshot mendeteksi pergantian hari
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().split("T")[0];
+    
+    await usersCol.doc(currentUserId).update({
+      lastResetDate: yesterdayStr
+    });
+    // Tidak perlu panggil performDayReset manual, onSnapshot akan menangkap perubahan
+    // dan memanggilnya otomatis.
+  } catch (err) {
+    alert("Gagal force reset: " + err.message);
+  }
 }
 
