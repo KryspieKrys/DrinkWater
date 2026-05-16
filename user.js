@@ -107,7 +107,9 @@ function renderUserPage(userData) {
   // translateY=290 → empty (0%), translateY=22 → full (100%)
   const waterY = 312 - (290 * percent / 100);
   const waterGroup = document.getElementById('water-group');
+  const duckGroup  = document.getElementById('duck-group');
   if (waterGroup) waterGroup.style.transform = `translateY(${waterY}px)`;
+  if (duckGroup)  duckGroup.style.transform  = `translateY(${waterY}px)`;
 
   // Update SVG text labels
   const amountEl = document.getElementById('svg-amount');

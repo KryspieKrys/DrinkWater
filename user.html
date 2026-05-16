@@ -54,10 +54,9 @@
             <path class="wave-front" d="M-200,0 Q-150,10 -100,0 T0,0 T100,0 T200,0 T300,0 T400,0 L400,400 L-200,400 Z" fill="rgba(255,255,255,0.35)"/>
             <!-- Water body -->
             <rect x="-10" y="10" width="220" height="400" fill="rgba(255,255,255,0.18)"/>
-            <!-- Bebek mengikuti ketinggian air -->
-            <image class="duck-swim" href="SwimDuck.png" x="67" y="-55" width="66" height="66"/>
           </g>
         </g>
+
 
         <!-- Glass outline (drawn over water) -->
         <path d="M 30,18 L 170,18 L 148,314 L 52,314 Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linejoin="round"/>
@@ -69,6 +68,11 @@
         <path d="M 46,36 Q 53,110 49,220" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="6" stroke-linecap="round"/>
         <!-- Right shine -->
         <path d="M 152,36 Q 155,80 153,130" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- Duck (in front of glass outline, behind text) -->
+        <g id="duck-group" style="transform: translateY(290px);">
+          <image class="duck-swim" href="SwimDuck.png" x="67" y="-55" width="66" height="66"/>
+        </g>
 
         <!-- Text overlay -->
         <text id="svg-amount" x="100" y="168" text-anchor="middle" font-family="Poppins,sans-serif" font-size="30" font-weight="700" fill="white">0ml</text>
