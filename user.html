@@ -127,7 +127,10 @@
 
     <!-- Riwayat Log Hari Ini -->
     <div class="glass">
-      <h2>Today's Logs</h2>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h2 style="margin-bottom: 0;">Today's Logs</h2>
+        <button onclick="resetTodayProgress()" style="padding: 4px 10px; font-size: 0.75rem; background: rgba(255,107,107,0.8); border: none; border-radius: 6px; color: white;">Reset 0 ml</button>
+      </div>
       <ul id="log-list" class="log-list">
         <!-- Diisi oleh JS -->
       </ul>

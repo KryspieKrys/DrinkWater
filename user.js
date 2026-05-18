@@ -491,6 +491,25 @@ function renderHistory(history) {
 }
 
 // ============================================================
+// RESET PROGRESS HARI INI
+// ============================================================
+async function resetTodayProgress() {
+  if (!confirm("Yakin ingin menghapus progress hari ini kembali ke 0 ml? Data riwayat minuman hari ini akan terhapus.")) return;
+  
+  try {
+    // Animasi surut sebelum mereset (opsional agar terlihat mulus)
+    await animateWaterDrain();
+    
+    await usersCol.doc(currentUserId).update({
+      todayMl: 0,
+      logs: []
+    });
+  } catch (err) {
+    alert("Gagal mereset progress: " + err.message);
+  }
+}
+
+// ============================================================
 // DEBUG: FORCE RESET (Untuk menguji history)
 // ============================================================
 async function forceDayReset() {
